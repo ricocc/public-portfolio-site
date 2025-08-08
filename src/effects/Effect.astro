@@ -70,18 +70,6 @@
 		'vue.png',
 		'wechat.png'
 	];
-	const uiImages = [
-		'bell.png',
-		'browser.png',
-		'document.png',
-		'speaker.png',
-		'phone.png',
-		'folder.png',
-		'atom.png',
-		'calculator.png',
-		'computer.png',
-		'delete.png'
-	];
 	const need3d = [
 		'01.png',
 		'02.png',
@@ -94,7 +82,6 @@
 		'09.png',
 		'10.png'
 	];
-
 	// 定义事件，用于组件间通信
 	const EFFECT_CHANGE_EVENT = 'effect-state-changed';
 
@@ -165,20 +152,48 @@
 		}
 	};
 
+		// 保存 ImageTrail 实例
+	let imageTrailInstance = null;
+
 	// 图片预加载
 	preloadImages('.effects__img-inner').then(() => {
-		new ImageTrail(document.querySelector('.effects'));
+		imageTrailInstance = new ImageTrail(document.querySelector('.effects'));
 	});
 
 	// 初始化页面
 	const currentState = getCurrentState();
 	initializeState(currentState);
 
-	// 监听状态变化事件
-	window.addEventListener(EFFECT_CHANGE_EVENT, (e) => {
+	document.addEventListener('DOMContentLoaded', () => {
+		// 确保imageTrailInstance已创建后再检查
+		const checkInstanceInterval = setInterval(() => {
+			if (imageTrailInstance) {
+			// 如果当前状态是3，则禁用鼠标跟随效果
+			if (currentState === 3) {
+				imageTrailInstance.disable();
+			}
+			clearInterval(checkInstanceInterval);
+			}
+		}, 100);
+		});
+
+		window.addEventListener(EFFECT_CHANGE_EVENT, (e) => {
 		const newState = e.detail.state;
+
+		// 更新图片 & 类名
 		initializeState(newState);
-	});
+
+		// 控制鼠标跟随
+		if (imageTrailInstance) {
+			if (newState === 3) {
+			imageTrailInstance.disable();
+			} else {
+			imageTrailInstance.enable();
+			// 重要：确保在启用后重新开始渲染循环
+			imageTrailInstance.restartRender();
+			}
+		}
+		});
 </script>
 <style>
 .train-switch button{

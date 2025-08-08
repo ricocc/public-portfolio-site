@@ -1,8 +1,8 @@
 {
   "name": "rico-blog-template",
-  "author": "Ricocc",
+  "author": "Ricoui",
   "description": "Astro.js Project",
-  "website": "https://blog.ricocc.com/",
+  "website": "https://ricoui.com/",
   "repository": "https://github.com/ricocc/public-portfolio-site",
   "license": "MIT",
   "type": "module",
@@ -16,9 +16,10 @@
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
-    "@astrojs/rss": "4.0.11",
-    "@astrojs/sitemap": "3.3.1",
-    "astro": "5.7.5",
+    "@astrojs/mdx": "^4.3.3",
+    "@astrojs/rss": "4.0.12",
+    "@astrojs/sitemap": "3.4.2",
+    "astro": "5.12.8",
     "sass": "^1.79.4",
     "typescript": "^5.6.2"
   }

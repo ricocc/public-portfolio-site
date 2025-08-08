@@ -2,6 +2,7 @@
     <button data-state="0" class="font-type train-yellow"><span>DESIGN</span> </button>
     <button data-state="1" class="font-type train-blue"> <span>SKILL</span></button>
     <button data-state="2" class="font-type train-green"><span>NEED3D</span></button>
+	<button data-state="3" class="font-type train-white"><span>OFF</button>
 </div>
 
 <script is:inline type="module">
@@ -54,9 +55,10 @@
     updateButtonDisplay(currentState);
 
     // 按钮点击事件
+    // 按钮点击事件
     buttons.forEach((button, index) => {
         button.addEventListener('click', () => {
-            const newState = (index + 1) % 3; // 循环切换状态
+            const newState = (index + 1) % 4; // 循环切换状态
 
             // 保存状态到 localStorage，48小时有效
             saveState(newState);
@@ -151,7 +153,10 @@
 	--train-color:#1bc47d;
 	--train-color-rgb:27, 196, 125;
 }
-
+.train-white{
+	--train-color:#dedede;
+	--train-color-rgb:200,200,200;
+}
 .animated {
 	animation-duration: .75s; /* 动画持续时间 */
 	animation-fill-mode: forwards;

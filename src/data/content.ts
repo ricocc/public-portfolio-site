@@ -154,13 +154,12 @@ export interface FilterItem {
 	dataGroup: string
 }
 export const filterItems: FilterItem[] = [
+	{ content: "💎推荐", dataGroup: "recommend" },
 	{ content: "网页", dataGroup: "web" },
 	{ content: "UI", dataGroup: "ui" },
-	{ content: "三维", dataGroup: "3d" },
+	{ content: "3D", dataGroup: "3d" },
 	{ content: "摄影", dataGroup: "photography" },
-	{ content: "插画", dataGroup: "illustration" },
 	{ content: "品牌", dataGroup: "brand" },
-	{ content: "其他", dataGroup: "other" }
 ];
 
 

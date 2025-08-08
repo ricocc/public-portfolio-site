@@ -90,6 +90,20 @@
 		"tag": "Web",
 		"date": "2025-02-16",
 		"mark": true
+	},
+	{
+		"id": "9",
+		"cover": "/assets/cover/cover-ricoog.jpg",
+		"useVideo": false,
+		"title": "Rico OG Gallery",
+		"desc": "Rico OG Inspiration Library",
+		"url": "https://og.ricoui.com/",
+		"detail": "https://og.ricoui.com/",
+		"category": "web,recommend",
+		"tag": "Web",
+		"date": "2025-08-06",
+		"mark": true,
+		"opensource": false
 	}
 
 

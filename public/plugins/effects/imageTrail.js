@@ -34,7 +34,8 @@ export class ImageTrail {
     isIdle = true; // Flag to check if all images are inactive
     // Mouse distance from the previous trigger, required to show the next image
     threshold = 80;
-
+    isEnabled = true;
+    renderLoopActive = true;
     /**
      * Constructor for the ImageTrail class.
      * Initializes the instance, sets up the DOM elements, creates Image objects for each image element, and starts the rendering loop.
@@ -43,10 +44,10 @@ export class ImageTrail {
     constructor(DOM_el) {
         // Store the reference to the parent DOM element.
         this.DOM.el = DOM_el;
-
+        this.renderLoopActive = true;
         // Create and store Image objects for each image element found within the parent DOM element.
         this.images = [...this.DOM.el.querySelectorAll('.effects__img')].map(img => new Image(img));
-        
+
         // Store the total number of images.
         this.imagesTotal = this.images.length;
 
@@ -65,15 +66,37 @@ export class ImageTrail {
         window.addEventListener('touchmove', onPointerMoveEv);
     }
 
+        enable() {
+            this.isEnabled = true;
+        }
+
+        disable() {
+            this.isEnabled = false;
+        }
+
+        // 新增：重启渲染循环的方法
+        restartRender() {
+            if (this.isEnabled && !this.renderLoopActive) {
+                this.renderLoopActive = true;
+                cacheMousePos = {...mousePos}; // 重置缓存的鼠标位置
+                lastMousePos = {...mousePos};  // 重置最后鼠标位置
+                requestAnimationFrame(() => this.render());
+            }
+        }
     /**
      * The `render` function is the main rendering loop for the `ImageTrail` class, updating images based on mouse movement.
      * It calculates the distance between the current and the last mouse position, then decides whether to show the next image.
-     * @returns {void} 
+     * @returns {void}
      */
     render() {
+
+     if (!this.isEnabled) {
+        this.renderLoopActive = false;
+        return;
+        }
         // Calculate distance between current mouse position and last recorded mouse position.
         let distance = getMouseDistance(mousePos, lastMousePos);
-        
+
         // Smoothly interpolate between cached mouse position and current mouse position for smoother visual effects.
         cacheMousePos.x = lerp(cacheMousePos.x || mousePos.x, mousePos.x, 0.1);
         cacheMousePos.y = lerp(cacheMousePos.y || mousePos.y, mousePos.y, 0.1);
@@ -90,24 +113,25 @@ export class ImageTrail {
         }
 
         // Request the next animation frame, creating a recursive loop for continuous rendering.
+        this.renderLoopActive = true;
         requestAnimationFrame(() => this.render());
-    }
 
+    }
     /**
      * The `showNextImage` function is responsible for displaying, animating, and managing the next image in the sequence.
      * It increments the zIndexVal, selects the next image, stops ongoing animations, and defines a series of GSAP animations.
-     * @returns {void} 
+     * @returns {void}
      */
     showNextImage() {
         // Increment zIndexVal for next image.
         ++this.zIndexVal;
-    
+
         // Select the next image in the sequence, or revert to the first image if at the end of the sequence.
         this.imgPosition = this.imgPosition < this.imagesTotal-1 ? this.imgPosition+1 : 0;
-        
+
         // Retrieve the Image object for the selected position.
         const img = this.images[this.imgPosition];
-        
+
         // Stop any ongoing GSAP animations on the target image element to prepare for new animations.
         gsap.killTweensOf(img.DOM.el);
 
@@ -137,7 +161,7 @@ export class ImageTrail {
             scale: 0.2
         }, 0.4)
     }
-    
+
     /**
      * onImageActivated function is called when an image's activation (display) animation begins.
      * It increments the activeImagesCount and sets isIdle flag to false.
@@ -165,4 +189,8 @@ export class ImageTrail {
             this.isIdle = true;
         }
     }
+
+
+
+
 }

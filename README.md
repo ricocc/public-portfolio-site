@@ -4,7 +4,7 @@
 # 设计师的个人网站 Designer Portfolio Site
 
 ### 网站预览
-Rico's Blog:  <a href="https://blog.ricocc.com/" target="_blank">blog.ricocc.com</a>
+Rico's Blog:  <a href="https://ricoui.com/" target="_blank">ricoui.com</a>
 
 仓库地址:   <a href="github.com/ricocc/public-portfolio-site" target="_blank"> https://github.com/ricocc/public-portfolio-site </a>
 
@@ -15,7 +15,7 @@ Rico's Blog:  <a href="https://blog.ricocc.com/" target="_blank">blog.ricocc.com
 
 ### 技术栈
 
-- Astro.js 5.7.5
+- Astro.js 5.12.8
 - Sass 1.79.4
 - typescript: 5.6.2
 
